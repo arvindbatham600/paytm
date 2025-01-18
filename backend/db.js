@@ -6,11 +6,33 @@ mongoose.connect(
 );
 
 // create schema
-const userSchema = mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  username: String,
-  password: String,
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    minLength: 3,
+    maxLength: 30,
+    lowercase: true,
+    trim: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minLength: 6,
+  },
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxLength: 50,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxLength: 50,
+  },
 });
 
 // create model
