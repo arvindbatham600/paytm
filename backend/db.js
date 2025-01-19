@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 // connect mongodb url
-mongoose.connect(
-  "mongodb+srv://arvindbatham60:mongopassword@cluster0.qph9o.mongodb.net/"
-);
+// mongoose.connect("mongodb+srv://arvindbatham60:@cluster0.qph9o.mongodb.net/");
 
 // create schema
 const userSchema = new mongoose.Schema({
