@@ -1,10 +1,9 @@
-const express = require("express");
+const express = require("express")
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  console.log("in main userRouter");
-  return res.send("Hello");
-});
+router.get("/", (req,res) => {
+    res.send("userRouter working.. ")
+})
 
 module.exports = router;
