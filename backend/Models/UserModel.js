@@ -2,15 +2,23 @@ const mongoose = require("mongoose");
 
 // create schema
 const userSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
     required: true,
-    minLength: 3,
-    maxLength: 30,
+    minlength: 3,
+    maxlength: 320, // RFC 5321 allows up to 320 chars for emails
     lowercase: true,
     trim: true,
     unique: true,
+    validate: {
+      validator: function (value) {
+        // Using regex for basic email validation
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      },
+      message: (props) => `${props.value} is not a valid email!`,
+    },
   },
+
   password: {
     type: String,
     required: true,
