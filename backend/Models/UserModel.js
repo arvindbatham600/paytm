@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-// connect mongodb url
-// mongoose.connect("mongodb+srv://arvindbatham60:@cluster0.qph9o.mongodb.net/");
-
 // create schema
 const userSchema = new mongoose.Schema({
   username: {
@@ -34,9 +31,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // create model
-const User = mongoose.model("User", userSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 // export the model
-module.exports = {
-  User,
-};
+module.exports = UserModel;
