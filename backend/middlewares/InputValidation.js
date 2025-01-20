@@ -9,7 +9,6 @@ const userSchema = zod.object({
 const InputValidation = (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     // validate the inputs
     const validate = userSchema.safeParse({
       email: email,
@@ -23,8 +22,6 @@ const InputValidation = (req, res, next) => {
         message: "Invalid inputs",
       });
     }
-
-    console.log("validity", validate);
   } catch (e) {
     console.log("error", e);
     return res.send("getting error while input validation");

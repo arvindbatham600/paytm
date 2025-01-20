@@ -1,12 +1,12 @@
 // import the user model
 const UserModel = require("../Models/UserModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const SignupHander = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   const userExist = await UserModel.findOne({ email });
-  console.log("userExist", userExist)
   if (userExist) {
     res.status(200).send({
       message: "User already Exists",
@@ -19,9 +19,14 @@ const SignupHander = async (req, res) => {
       firstName,
       lastName,
       email,
-      password : hashedPassword,
+      password: hashedPassword,
     });
-    console.log("user detail", user)
+    user.save();
+    const token = jwt.sign({ email, firstName }, process.env.JWT_SECRET);
+    res.status(200).send({
+      message: "User Created Successfully",
+      token: token,
+    });
   }
 };
 
