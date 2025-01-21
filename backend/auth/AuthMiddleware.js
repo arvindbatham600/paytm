@@ -10,7 +10,7 @@ const AuthMiddleware = async (req, res, next) => {
     // jwt decode
       const decode = jwt.verify(token, process.env.JWT_SECRET);
       console.log("decoded value", decode)
-      req.user = decode.email;
+      req.userId = decode.email;
       next(); // you can go ahead
   } catch (e) {
       res.status(500).send({

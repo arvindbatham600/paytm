@@ -9,7 +9,7 @@ const router = express.Router();
 // signup and signin router
 router.post("/signup", SignupValidation, SignupHander); 
 // router.post("/signin", SigninValidation, SigninHandler )
-router.post("/signin", AuthMiddleware )
+router.post("/signin", AuthMiddleware, SigninValidation, SigninHandler)
 
 
 module.exports = router;
