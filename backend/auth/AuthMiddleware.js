@@ -8,16 +8,15 @@ const AuthMiddleware = async (req, res, next) => {
   //   console.log("decoded value", decode.email);
   try {
     // jwt decode
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
     //   console.log("decoded value", decode)
-      req.userId = decode.id;
-      
-      next(); // you can go ahead
+    req.userId = decode.id;
+    next(); // you can go ahead
   } catch (e) {
-      res.status(500).send({
-          message: "Invalid Token",
-          success: false
-      })
+    return res.status(500).send({
+      message: "Invalid Token",
+      success: false,
+    });
     console.log("error", e);
   }
 };

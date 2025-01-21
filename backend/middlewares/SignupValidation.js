@@ -28,7 +28,7 @@ const SignupValidation = (req, res, next) => {
       });
     }
   } catch (e) {
-    res.send("getting error while input validation");
+    return res.send("getting error while input validation");
   }
 };
 

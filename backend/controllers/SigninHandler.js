@@ -8,33 +8,36 @@ const SigninHandler = async (req, res) => {
     // check if the user exists or not..
     // user await here, its Asynchronous request
     const userExist = await UserModel.findOne({ email });
-    if (userExist) {
-      // get the password
-      const userPassword = userExist.password;
-    //   console.log("userpassword from database", userPassword);
-      // compare this password with Entered password
-      const passwordMatch = await bcrypt.compare(password, userPassword);
-      //   console.log("password check", passwordMatch);
-      if (passwordMatch) {
-        const token = jwt.sign(
-          {
-            id: userExist._id,
-            email,
-          },
-          process.env.JWT_SECRET
-        );
-
-        res.status(200).send({
-          token,
-        });
-      }
-    } else {
-      res.status(200).send({
-        message: "email not registered",
+    if (!userExist) {
+      return res.status(404).send({
+        message: "Email not registered",
       });
     }
+    // get the password
+    const userPassword = userExist.password;
+
+    // compare this password with Entered password
+    const passwordMatch = await bcrypt.compare(password, userPassword);
+    if (!passwordMatch) {
+      return res.send({
+        message: "Invalid credential",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: userExist._id,
+        email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    return res.status(200).send({
+      message: "User Authenticated",
+      token,
+    });
   } catch (e) {
-    res.status(500).send({
+    return res.status(500).send({
       message: "internal Server Error",
     });
   }
