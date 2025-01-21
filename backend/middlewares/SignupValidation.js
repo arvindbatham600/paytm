@@ -1,19 +1,24 @@
 const zod = require("zod");
 
-// creating zod schema
+// create zod schema -->
 const userSchema = zod.object({
+  firstName: zod.string(),
+  lastName: zod.string(),
   email: zod.string().email(),
   password: zod.string(),
 });
 
-const InputValidation = (req, res, next) => {
+const SignupValidation = (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     // validate the inputs
     const validate = userSchema.safeParse({
-      email: email,
-      password: password,
+      email,
+      password,
+      firstName,
+      lastName,
     });
+
     if (validate.success) {
       next();
     } else {
@@ -23,9 +28,8 @@ const InputValidation = (req, res, next) => {
       });
     }
   } catch (e) {
-    console.log("error", e);
-    return res.send("getting error while input validation");
+    res.send("getting error while input validation");
   }
 };
 
-module.exports = InputValidation;
+module.exports = SignupValidation;

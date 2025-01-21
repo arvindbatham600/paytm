@@ -7,6 +7,7 @@ const SignupHander = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   const userExist = await UserModel.findOne({ email });
+  // console.log("userExist in signup page", userExist)
   if (userExist) {
     res.status(200).send({
       message: "User already Exists",
