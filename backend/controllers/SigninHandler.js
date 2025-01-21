@@ -11,7 +11,7 @@ const SigninHandler = async (req, res) => {
     if (userExist) {
       // get the password
       const userPassword = userExist.password;
-      console.log("userpassword from database", userPassword);
+    //   console.log("userpassword from database", userPassword);
       // compare this password with Entered password
       const passwordMatch = await bcrypt.compare(password, userPassword);
       //   console.log("password check", passwordMatch);
