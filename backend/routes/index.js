@@ -10,6 +10,6 @@ const router = express.Router();
 // });
 
 router.use("/user", userRouter); // all user routes will be here..
-router.use("/transaction", transactionRouter);
+router.use("/transaction", transactionRouter); // will be usign authMiddleware here
 
 module.exports = router;
