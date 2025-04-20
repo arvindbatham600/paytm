@@ -12,7 +12,7 @@ const UpdatePassword = async (req, res) => {
   try {
     const { password, firstName, lastName } = req.body;
     const { success } = updateBody.safeParse(req.body);
-
+ 
     if (!success) {
       return res.status(411).json({
         message: "Error while updating the information",

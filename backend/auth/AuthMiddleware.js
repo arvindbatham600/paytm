@@ -1,23 +1,29 @@
 const jwt = require("jsonwebtoken");
 
 const AuthMiddleware = async (req, res, next) => {
-  //get the token from headers -->
-  const authorization = req.headers["authorization"];
-  // console.log("token", authorization.split(" ")[1]);
-  const token = authorization.split(" ")[1];
-  //   console.log("decoded value", decode.email);
-  try {
-    // jwt decode
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
-    //   console.log("decoded value", decode)
-    req.userId = decode.id;
-    next(); // you can go ahead
-  } catch (e) {
-    return res.status(500).send({
-      message: "Invalid Token",
-      success: false,
+  const authHeader = req.headers.authorization;
+  // check if authHeader exists and starts with Bearer
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    return res.status(403).json({
+      message: "Token Not Provided",
     });
-    console.log("error", e);
+  }
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.id) {
+      req.userId = decoded.id;
+      next();
+    } else {
+      return res.status(403).json({
+        message: "Not Authorized",
+      });
+    }
+  } catch (e) {
+    return res.status(403).json({
+      message: "Wrong Token",
+    });
   }
 };
 
