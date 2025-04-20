@@ -2,8 +2,7 @@ const UserModel = require("../Models/UserModel");
 
 const BulkUserController = async (req, res) => {
   try {
-    const filter = req.query.filter;
-    console.log("filter is here", filter);
+    const filter = req.query.filter || "";
     const users = await UserModel.find({
       $or: [
         {
@@ -18,8 +17,6 @@ const BulkUserController = async (req, res) => {
         },
       ],
     });
-
-    console.log("error above", users);
 
     res.status(200).send({
       user: users.map((user) => ({

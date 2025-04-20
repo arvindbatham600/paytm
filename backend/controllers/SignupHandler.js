@@ -2,6 +2,7 @@
 const UserModel = require("../Models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const AccountModel = require("../Models/AccountModel");
 
 const SignupHander = async (req, res) => {
   try {
@@ -17,7 +18,13 @@ const SignupHander = async (req, res) => {
       // hashing the password
       const hashedPassword = await bcrypt.hash(password, 10);
       // create a new user in the database
-      const user = new UserModel({
+      // const user = new UserModel({
+      //   firstName,
+      //   lastName,
+      //   email,
+      //   password: hashedPassword,
+      // });
+      const user = await UserModel.create({
         firstName,
         lastName,
         email,
@@ -25,7 +32,15 @@ const SignupHander = async (req, res) => {
       });
       // console.log("we are here");
 
-      await user.save();
+      const userId = user._id;
+
+      // create new account
+      await AccountModel.create({
+        userId,
+        balance: 1 + Math.random() * 1000,
+      });
+
+      // await user.save();
       // console.log("now we are here")
       const token = jwt.sign({ email, firstName }, process.env.JWT_SECRET);
       return res.status(200).send({
