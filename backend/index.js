@@ -21,6 +21,12 @@ connectDatabase();
 
 // all router are in mainRouter
 app.use("/api/v1", mainRouter);
+// for checking the backend
+app.get("/", (req, res) => {
+  return res.status(200).send({
+    message: "paytm backend working...",
+  });
+});
 
 app.listen(3000, () => {
   console.log("listening on port 3000");
