@@ -19,7 +19,7 @@ const SigninHandler = async (req, res) => {
     // compare this password with Entered password
     const passwordMatch = await bcrypt.compare(password, userPassword);
     if (!passwordMatch) {
-      return res.send({
+      return res.status(401).send({
         message: "Invalid credential",
       });
     }
