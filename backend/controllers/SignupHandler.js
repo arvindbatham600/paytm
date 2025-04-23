@@ -11,7 +11,7 @@ const SignupHander = async (req, res) => {
     const userExist = await UserModel.findOne({ email });
     // console.log("userExist in signup page", userExist)
     if (userExist) {
-      return res.status(200).send({
+      return res.status(409).send({
         message: "User already Exists",
       });
     } else {
@@ -46,6 +46,10 @@ const SignupHander = async (req, res) => {
       return res.status(200).send({
         message: "User Created Successfully",
         token: token,
+        firstName,
+        lastName,
+        email,
+        userId,
       });
     }
   } catch (e) {

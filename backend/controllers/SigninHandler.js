@@ -35,6 +35,10 @@ const SigninHandler = async (req, res) => {
     return res.status(200).send({
       message: "User Authenticated",
       token,
+      userId: userExist._id,
+      firstName: userExist.firstName,
+      lastName: userExist.lastName,
+      email: userExist.email,
     });
   } catch (e) {
     return res.status(500).send({
