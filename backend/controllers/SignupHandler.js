@@ -42,7 +42,7 @@ const SignupHander = async (req, res) => {
 
       // await user.save();
       // console.log("now we are here")
-      const token = jwt.sign({ email, firstName }, process.env.JWT_SECRET);
+      const token = jwt.sign({ email, id: userId }, process.env.JWT_SECRET);
       return res.status(200).send({
         message: "User Created Successfully",
         token: token,
